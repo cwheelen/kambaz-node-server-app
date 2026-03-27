@@ -23,12 +23,22 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
 };
+// if (process.env.SERVER_ENV !== "development") {
+//   sessionOptions.proxy = true;
+//   sessionOptions.cookie = {
+//     sameSite: "none",
+//     secure: true,
+//     // domain: process.env.SERVER_URL,
+//   };
+// }
+
 if (process.env.SERVER_ENV !== "development") {
   sessionOptions.proxy = true;
   sessionOptions.cookie = {
     sameSite: "none",
     secure: true,
-    // domain: process.env.SERVER_URL,
+    httpOnly: true,
+    partitioned: true,
   };
 }
 app.use(session(sessionOptions));
