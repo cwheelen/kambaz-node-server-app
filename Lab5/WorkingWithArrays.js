@@ -75,6 +75,23 @@ export default function WorkingWithArrays(app) {
     });
     res.sendStatus(200);
   };
+
+  const updateTodoTitle = (req, res) => {
+    const { id, title } = req.params;
+    const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
+    if (todoIndex === -1) {
+      res.status(404).json({ message: `Unable to update Todo with ID ${id}` });
+      return;
+    }
+    todos = todos.map((t) => {
+      if (t.id === parseInt(id)) {
+        return { ...t, title };
+      }
+      return t;
+    });
+    res.sendStatus(200);
+  };
+
   app.put("/lab5/todos/:id", updateTodo);
 
   app.get("/lab5/todos/create", createNewTodo);
