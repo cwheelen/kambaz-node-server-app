@@ -19,7 +19,10 @@ export default function UserRoutes(app, db) {
 
   const findUserById = (req, res) => {
     const user = dao.findUserById(req.params.userId);
-    if (!user) { res.sendStatus(404); return; }
+    if (!user) {
+      res.sendStatus(404);
+      return;
+    }
     res.json(user);
   };
 
@@ -61,8 +64,21 @@ export default function UserRoutes(app, db) {
 
   const profile = (req, res) => {
     const currentUser = req.session["currentUser"];
-    if (!currentUser) { res.sendStatus(401); return; }
+    if (!currentUser) {
+      res.sendStatus(401);
+      return;
+    }
     res.json(currentUser);
+  };
+
+  const findUsersForCourse = (req, res) => {
+    const { courseId } = req.params;
+    const { enrollments, users } = db;
+    const enrolledUserIds = enrollments
+      .filter((e) => e.course === courseId)
+      .map((e) => e.user);
+    const courseUsers = users.filter((u) => enrolledUserIds.includes(u._id));
+    res.json(courseUsers);
   };
 
   app.post("/api/users", createUser);
@@ -74,4 +90,5 @@ export default function UserRoutes(app, db) {
   app.post("/api/users/signin", signin);
   app.post("/api/users/signout", signout);
   app.post("/api/users/profile", profile);
+  app.get("/api/courses/:courseId/users", findUsersForCourse);
 }

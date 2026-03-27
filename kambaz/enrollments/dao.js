@@ -2,9 +2,32 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function EnrollmentsDao(db) {
   function enrollUserInCourse(userId, courseId) {
-    const { enrollments } = db;
-    enrollments.push({ _id: uuidv4(), user: userId, course: courseId });
+    const exists = db.enrollments.some(
+      (e) => e.user === userId && e.course === courseId,
+    );
+    if (!exists) {
+      db.enrollments.push({ _id: uuidv4(), user: userId, course: courseId });
+    }
   }
 
-  return { enrollUserInCourse };
+  function unenrollUserFromCourse(userId, courseId) {
+    db.enrollments = db.enrollments.filter(
+      (e) => !(e.user === userId && e.course === courseId),
+    );
+  }
+
+  function findAllEnrollments() {
+    return db.enrollments;
+  }
+
+  function findCoursesForUser(userId) {
+    return db.enrollments.filter((e) => e.user === userId);
+  }
+
+  return {
+    enrollUserInCourse,
+    unenrollUserFromCourse,
+    findAllEnrollments,
+    findCoursesForUser,
+  };
 }

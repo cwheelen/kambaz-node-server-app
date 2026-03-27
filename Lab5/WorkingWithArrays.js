@@ -51,7 +51,6 @@ export default function WorkingWithArrays(app) {
     todos.splice(todoIndex, 1);
     res.sendStatus(200);
   };
-  
 
   const postNewTodo = (req, res) => {
     const newTodo = { ...req.body, id: new Date().getTime() };
@@ -59,11 +58,10 @@ export default function WorkingWithArrays(app) {
     res.json(newTodo);
   };
 
-
-const updateTodo = (req, res) => {
+  const updateTodo = (req, res) => {
     const { id } = req.params;
 
-      const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
+    const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
     if (todoIndex === -1) {
       res.status(404).json({ message: `Unable to update Todo with ID ${id}` });
       return;
@@ -78,7 +76,6 @@ const updateTodo = (req, res) => {
     res.sendStatus(200);
   };
   app.put("/lab5/todos/:id", updateTodo);
-
 
   app.get("/lab5/todos/create", createNewTodo);
   app.post("/lab5/todos", postNewTodo);

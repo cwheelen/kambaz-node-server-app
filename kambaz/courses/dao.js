@@ -8,9 +8,7 @@ export default function CoursesDao(db) {
   function findCoursesForEnrolledUser(userId) {
     const { courses, enrollments } = db;
     return courses.filter((course) =>
-      enrollments.some(
-        (e) => e.user === userId && e.course === course._id
-      )
+      enrollments.some((e) => e.user === userId && e.course === course._id),
     );
   }
 
