@@ -1,4 +1,4 @@
-import { PostModel, FolderModel } from "./model.js";
+import { PostModel, FolderModel } from "./Model.js";
 import { v4 as uuidv4 } from "uuid";
 
 const DEFAULT_FOLDERS = [
