@@ -1,4 +1,4 @@
-import PazzaDao from "./dao.js";
+import PazzaDao from "./Dao.js";
 
 export default function PazzaRoutes(app) {
   const dao = PazzaDao();

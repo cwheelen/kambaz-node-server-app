@@ -48,7 +48,7 @@ CourseRoutes(app, db);
 ModulesRoutes(app, db);
 AssignmentsRoutes(app, db);
 EnrollmentsRoutes(app, db);
+PazzaRoutes(app);  // ← moved before listen
 Lab5(app);
 Hello(app);
 app.listen(process.env.PORT || 4000);
-PazzaRoutes(app);
